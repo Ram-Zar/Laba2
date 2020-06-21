@@ -9,6 +9,11 @@ Matrix operator*(const Matrix& m, const int a)
 		 M[i]=m.GetNonZeroElem()[i]*a;
 	}
 	Matrix temp = m;
+    // НАДО ЖЕ НЕ ТОЛЬКО ЗНАЧЕНИЕ ЭЛЕМЕНТОВ ПЕРЕДАТЬ, НО И
+    // ИНФОРМАЦИО О ТОМ, ГДЕ ОНИ НАХОДЯТСЯ
+    // ВООБЩЕ НАДО БЫЛО ЭТОТ ОПЕРАТОР ОСТАВИТЬ ЧЛЕНОМ КЛАССА,
+    // А ПРИ РЕАЛИЗАЦИИ СКОПИРОВАТЬ temp = *this,
+    // УМНОЖИТЬ ЭЛЕМЕНТЫ temp НА ЧИСЛО И ВЕРНУТЬ temp
 	temp.SetNonZeroElems(M, m.GetNonZeroElemAmount());
 	delete[]M;
 	return temp;

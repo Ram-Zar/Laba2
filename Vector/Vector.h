@@ -84,6 +84,7 @@ public:
 	 {
 		 return m_dim;
 	 }
+     // днаюбэ ноепюрнп опенапюгнбюмхъ б int, осярэ нм бнгбпюыюер пюглеп бейрнпю
 	 operator double*()
 	 {
 		 return m_vector;
@@ -92,9 +93,6 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Vector& v);
 	friend std::istream& operator>>(std::istream& in, Vector& v);
 	friend double operator*(const Vector& v, const Vector& w);
-    // якедсчыхе рпх ноепюрнпю мюдн сапюрэ хг дпсгеи х пеюкхгнбюрэ
-    // йюй тсмйжхх онлнымхйх, йнрнпше ме хлечр днярсою й гюйпшрни       //оепедекюмн
-    // вюярх йкюяяю
 	friend Vector operator*(const Matrix& m, const Vector& v);
 };
 Vector operator+(const Vector& v, const Vector& w);

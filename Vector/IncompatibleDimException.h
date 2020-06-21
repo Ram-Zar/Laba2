@@ -6,18 +6,16 @@
 class IncompatibleDimException :public std::exception
 {
 private:
+    // ЛУЧШЕ ИСПОЛЬЗОВАТЬ КЛАСС std::string, ТОГДА НЕ НАДО
+    // СЛЕДИТЬ ЗА РАЗМЕРОМ СООБЩЕНИЯ, А ВДРУГ ОНО ОКАЖЕТСЯ БОЛЬШЕ 40 СИМВОЛОВ?
 	char Data[40]="\0";
 public:
 	IncompatibleDimException()
 	{}
 	IncompatibleDimException(const char *msg, int N, int M)
 	{
-        // ЭТИ ПАРАМЕТРЫ НАДО ВКЛЮЧИТЬ В СООБЩЕНИЕ msg, КОТОРОЕ ДОЛЖНО
-        // ВОЗВРАЩАТЬ ФУНЦИЯ what()
 		sprintf(Data, "%s%d%s%d", msg, N, " and ", M);
 	}
-    // В БАЗОВОМ КЛАССЕ std::exception ЕСТЬ ВИРТУАЛЬНАЯ ФУНКЦИЯ what(),
-    // НАДО ПЕРЕГРУЗИТЬ ЕЁ И ПОЛЬЗОВАТЬСЯ ВМЕСТО getInfo()
 	const char* what() const override
 	{
 		return Data;

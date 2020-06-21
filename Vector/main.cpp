@@ -8,6 +8,9 @@ int main()
 	int idv = 0, idm = 0,i,dim;
 	cout << "v" << ++idv << ":\n";
 	Vector v1;
+    // РАСКОММЕНТИРУЙ ВЫРАЖЕНИЕ НИЖЕ, И ИСПРАВЬ ОШИБКУ КОМПИЛЯЦИИ
+    // ВЫРАЖЕНИЕ НЕ ТРОГАТЬ
+//    v1 + 1;
 	cin >> v1;
 	cout << "\nconst v" << ++idv << ":\n";
 	cout << "input vector dimension\ndim=";
