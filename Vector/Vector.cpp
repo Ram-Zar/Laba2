@@ -17,48 +17,12 @@
 	 }
 	 return v;
  }
-Vector operator+(const Vector& v, const Vector& w)
-{
-    // СКЛАДЫВАТЬ НАДО ВЕКТОРЫ ОДИНАКОВОГО РАЗМЕРА
-    // ЧТОБЫ НЕ ДУБЛИРОВАТЬ КОД СЛОЖЕНИЯ, НАДО ВОСПОЛЬЗОВАТЬСЯ
-    // УЖЕ ИМЕЮЩИМСЯ operator+=
-    // Vector arg1(v);
-    // return arg1 += w;
-	int min, max;
-	bool F;
-	if (v.m_dim > w.m_dim)
-	{
-		F = true; 
-		min = w.m_dim;
-		max = v.m_dim;
-	}
-	else
-	{
-		F = false;
-		min = v.m_dim;
-		max = w.m_dim;
-	}
-	Vector temp(max);
-	for (int i = 0; i < max; ++i)
-	{
-		if (i < min)
-		{
-			temp.m_vector[i] = v.m_vector[i] + w.m_vector[i];
-		}
-		else
-		{
-			if (F == true)
-			{
-				temp.m_vector[i] += v.m_vector[i];
-			}
-			else
-			{
-				temp.m_vector[i] += w.m_vector[i];
-			}
-		}
-	}
-	return temp;
-}
+ Vector operator+(const Vector& v, const Vector& w)
+ {
+	 Vector temp = v;
+	 temp += w;
+	 return temp;//ПЕРЕДЕЛАНО
+ }
 
 Vector operator-(const Vector& v, const Vector& w)
 {
@@ -67,42 +31,31 @@ Vector operator-(const Vector& v, const Vector& w)
 
 Vector operator*(const Vector& v, double a)
 {
-	Vector temp(v);
-	for (int i = 0; i < v.m_dim; ++i)
-	{
-		temp.m_vector[i] *= a;
+	double* vec = new double[v.GetDim()];
+	for (int i = 0; i <v.GetDim() ;++i)
+	{ 
+		vec[i] = v.GetVec()[i]*a;
 	}
+	Vector temp(v.GetDim(), vec);
+	delete[]vec;
 	return temp;
 }
 
 Vector operator*(double a, const Vector& v)
 {
-    // ИСПОЛЬЗУЙ Vector operator*(const Vector& v, double a)
-    // ПРИ РЕАЛИЗАЦИИ, НЕ ДУБЛИРУЙ КОД
-	Vector temp(v);
-	for (int i = 0; i < v.m_dim; ++i)
-	{
-		temp.m_vector[i] *= a;
-	}
-	return temp;
+	Vector temp(v * a);
+	return temp;//ПЕРЕДЕЛАНО
 }
 
 double operator*(const Vector& v, const Vector& w)
 {
     // РАЗМЕРЫ ДОЛЖНЫ БЫТЬ ОДИНАКОВЫМИ, ЕСЛИ НЕТ - БРОСАЕМ ИСКЛЮЧЕНИЕ
-	int min, max;
 	double C = 0;
-	if (v.m_dim > w.m_dim)
+	if (v.m_dim != w.m_dim)
 	{
-		min = w.m_dim;
-		max = v.m_dim;
+		throw IncompatibleDimException("Unaccteptable dims!", v.m_dim, w.m_dim);//ПЕРЕДЕЛАНО
 	}
-	else
-	{
-		min = v.m_dim;
-		max = w.m_dim;
-	}
-	for (int i = 0; i < min; ++i)
+	for (int i = 0; i <v.m_dim; ++i)
 	{
 		C += v.m_vector[i] * w.m_vector[i];
 	}
@@ -136,4 +89,47 @@ double operator*(const Vector& v, const Vector& w)
 		 in >> v.m_vector[i];
 	 }
 	 return in;
+ }
+ Vector& Vector::operator=(const Vector& v)
+ {
+	 if (m_vector != nullptr)
+	 {
+		 delete[]m_vector;
+	 }
+	 m_dim = v.m_dim;
+	 m_vector = new double[v.m_dim];
+	 for (int i = 0; i < m_dim; ++i)
+	 {
+		 m_vector[i] = v.m_vector[i];
+	 }//   ПЕРЕДЕЛАНО  
+	 return *this;
+ }
+ void Vector::operator+=(const Vector& v)//здесь может быть исключение
+ {
+	 if (this->m_dim ==v.m_dim)
+	 {
+		 for (int i = 0; i < v.m_dim; ++i)
+		 {
+			 m_vector[i] += v.m_vector[i];
+		 }
+	 }
+	 else
+	 {
+		 throw IncompatibleDimException("Impossible to add biger-dim vector to smoller-dim one: ", this->m_dim, v.m_dim);
+	 }
+
+ }
+ void Vector::operator-=(const Vector& v)//здесь может быть исключение
+ {
+	 if (this->m_dim = v.m_dim)
+	 {
+		 for (int i = 0; i < v.m_dim; ++i)
+		 {
+			 m_vector[i] -= v.m_vector[i];
+		 }
+	 }
+	 else
+	 {
+		 throw IncompatibleDimException("Impossible to substruct biger-dim vector from smoller-dim one: ", this->m_dim, v.m_dim);
+	 }
  }

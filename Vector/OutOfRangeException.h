@@ -1,30 +1,19 @@
 #pragma once
 #include <exception>
 #include <iostream>
+#pragma warning (disable:4996)
 class OutOfRangeException :public std::exception
 {
 private:
-	int m_data;
-	int m_size1;
-	int m_size2;
+	char Data[40]="";
 public:
-	OutOfRangeException(const char* msg,int data,int size1,int size2):exception(msg)
+	OutOfRangeException(){}
+	OutOfRangeException(const char* msg, int index) 
 	{
-		m_data = data;
-		m_size1 = size1;
-		m_size2 = size2;
+		sprintf(Data, "%s%d", msg, index);
 	}
-	OutOfRangeException(const char* msg, int data, int size1) :exception(msg)
+	const char* what() const override
 	{
-		m_data = data;
-		m_size1 = size1;
-	}
-	OutOfRangeException(const char* msg, int size1)
-	{
-		m_size1 = size1;
-	}
-    void what()
-	{
-		std::cout << "Exception!"<<"\nInfo:\nData size=" << m_data << "\nInputed size1=" << m_size1 << "\nInputed size2=" << m_size2;
+		return Data;
 	}
 };

@@ -43,7 +43,6 @@ int main()
 	catch (IncompatibleDimException& e)
 	{
 		cout << e.what();
-		e.getInfo();
 	}
 	try
 	{
@@ -58,9 +57,8 @@ int main()
 	}
 	catch (OutOfRangeException& e)
 	{
-		e.what();
+		cout<<e.what();
 	}
-  
 	cout << "\n\nv3 dimension=" << v3.getDim();
 	double* p = (double*)v3;
 	cout << "\n\ndouble* p = (double*)v3;\np={";
@@ -70,20 +68,35 @@ int main()
 	}
 	cout << "}";
 	cout << "\n\nv3 lenght=" << v3.getLenght();
-	cout << "\n\nv1*v2=" << v1 * v2;
+	cout << "\n\nv1*v2=";
+	try
+	{
+		cout << v1 * v2;
+	}
+	catch (IncompatibleDimException& e)
+	{
+		cout << e.what();
+	}
 	cout << "\nInput number   n=";
 	cin >> i;
 	cout << "\n" << i << "*v1=" << i * v1 << "\nv1*" << i << "=" << v1 * i;
-	cout << "\n\nv3+v2=" << v3 + v2;
-	cout << "\n\nv3-v1=" << v3 - v1;
+	try
+	{
+		cout << "\n\nv3+v2=" << v3 + v2;
+	    cout << "\n\nv3-v1=" << v3 - v1;
+	}
+	catch (IncompatibleDimException& e)
+	{
+		cout << e.what();
+	}
 	cout << "\n//////Check matrix operations://////";
 	cout << "\nInput a numder   n=";
 	cin >> i;
 	cout << "m1*" << i << "=" << m1 * i<<endl;
 	cout << i << "*m1=" << m1 * i;
 	cout << "\nm1:lenght=" << m1.getLenght();
-	cout << "\nm1: widght=" << m1.getWidht();
-	cout << "\nm1: amount of nonzero elements=" << m1.getInfo();
+	cout << "\nm1: widght=" << m1.GetWeight();
+	cout << "\nm1: amount of nonzero elements=" << m1.GetNonZeroElemAmount();
 	cout << "\n/////Check vector amd matrix operation://////";
 	cout << "\nm2*v4\nnew v4:";
 	Vector v4;
@@ -98,7 +111,6 @@ int main()
 	catch (IncompatibleDimException& e)
 	{
 		cout << e.what();
-		e.getInfo();
 	}
 	cout << "\nInput v5 ; it's important that v5  has a dim as m2 has width\nv5 dim=";
 	cin >> i;
@@ -122,7 +134,6 @@ int main()
 	catch (IncompatibleDimException& e)
 	{
 		std::cout << e.what() << "\n";
-		e.getInfo();
 	}
 	return 0;
 }

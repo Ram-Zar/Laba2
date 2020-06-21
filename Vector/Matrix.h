@@ -9,12 +9,12 @@ class Vector;
 class Matrix
 {
 private:
-	int m_N;
-	int m_M;
-	int m_col;
-	double *m_A;
-	int *m_LI;
-	int *m_LJ;
+	int m_N=0;
+	int m_M=0;
+	int m_col=0;
+	double *m_A=nullptr;
+	int *m_LI = nullptr;
+	int *m_LJ = nullptr;
 	void Analiser(double** data)
 	{
 		int z;
@@ -73,8 +73,7 @@ private:
 	}
 public:
 	Matrix()
-	{
-	}
+	{}
 	Matrix(const Matrix& m)
 	{
 		m_N = m.m_N;
@@ -95,10 +94,9 @@ public:
 	}
 	Matrix(int N, int M, double** data)
 	{
-		cout << sizeof(N);
-		if ((((_msize(data) / 4) * (_msize(*data)))/8) != N * M)
+		if ((((_msize(data) / 4) * (_msize(*data)))/8) != long long(N * M))
 		{
-			throw OutOfRangeException("no matching of data size and size of created matrix \ncheck your input", ((_msize(data) / 4) * (_msize(*data))) / 8,N,M);
+			throw IncompatibleDimException("no matching of data size and size of created matrix \ncheck your input: ", int(((_msize(data) / 4) * (_msize(*data))) / 8),N*M);
 		}
 		
 		m_N = N;
@@ -112,138 +110,41 @@ public:
 		delete[]m_LI;
 		delete[]m_LJ;
 	}
-	friend istream& operator>>(istream& in, Matrix& m)
-	{
-		double** temp;
-		cout << "input matrix size\nN=";
-		in >> m.m_N;
-		cout << "\nM=";
-		in >> m.m_M;
-		temp = new double* [m.m_N];
-		for (int i = 0; i < m.m_N; ++i)
-		{
-			temp[i] = new double[m.m_M];
-		}
-		cout << "Input sparse matrix";
-		for (int i = 0; i < m.m_N; ++i)
-		{
-			for (int j = 0; j < m.m_M; ++j)
-			{
-				cout << "\nelem[" << i << "][" << j << "]=";
-				in >> temp[i][j];
-			}
-		}
-		m.m_LI = new int[m.m_N];
-		m.Analiser(temp);
-		for (int i = 0; i < m.m_N; ++i)
-		{
-			delete temp[i];
-		}
-		delete[]temp; 
-		return in;
-	}
-	friend ostream& operator<<(ostream& out, const Matrix& m)
-	{
-		for (int i = 0; i < m.m_N; ++i)
-		{
-			out << endl;
-			int line = 0;
-			for (int j = 0; j < m.m_M; ++j)
-			{
-				if (m.m_LI[i] == -1)
-				{
-					out <<setw(3)<<"0";
-				}
-				else
-				{
-                    if (m.m_LJ[m.m_LI[i]+line] == j)
-				    {
-					    out << setw(3) << m.m_A[m.m_LI[i]+line];
-						++line;
-				    }
-					else
-					{
-						out << setw(3) << "0";
-					}
-						
-				}
-				
-			}
-		}
-		return out;
-	}
-	friend Matrix operator*(const Matrix& m, const int a)
-	{
-		Matrix temp(m);
-		for (int i = 0; i < m.m_col; ++i) 
-		{
-			temp.m_A[i] *= a;
-		}
-		return temp;
-	}
-	friend Matrix operator*(const int a,const Matrix& m)
-	{
-        // ИСПОЛЬЗУЙ Matrix operator*(const Matrix& m, const int a)
-        // И УБЕРИ ИЗ ДРУЗЕЙ
-		Matrix temp(m);
-		for (int i = 0; i < m.m_col; ++i)
-		{
-			temp.m_A[i] *= a;
-		}
-		return temp;
-	}
-	friend Vector operator*(const Matrix& m, const Vector& v)
-	{
-		double S;
-		int line = 0,i = 0;
-		Vector temp(m.m_N);
-		if (m.m_M == v.m_dim)
-		{
-			while (i < m.m_N+1)
-			{
-				line = 0;
-				S = 0;
-				int j = 0;
-				while (j < m.m_M)
-				{
-					if (m.m_LI[i] != -1)
-					{
-						if (m.m_LJ[m.m_LI[i] + line] == j)	
-						{
-							S+=v.m_vector[j]*m.m_A[m.m_LI[i] + line];
-							if ((m.m_LI[i + 1] != m.m_LI[i] + 1)||(i==m.m_N-1))
-							{
-								++line;
-							}		
-						}
-					}
-					++j;
-				}
-				temp.m_vector[i] = S;
-				if ((i+1 == m.m_N)&&(j == m.m_M))
-				{
-					i = m.m_N + 1;
-				}
-				
-				++i;
-			}
-		}
-		else
-		{
-			throw IncompatibleDimException("no matching of size matrix and vector", m.m_M,v.m_dim);
-		}
-		return temp;
-	}
-	int getLenght()
-	{
-		return m_N;
-	}
-	int getWidht()
-	{
-		return m_M;
-	}
-	int getInfo()
+	int GetNonZeroElemAmount()const
 	{
 		return m_col;
 	}
+	double* GetNonZeroElem()const
+	{
+		return m_A;
+	}
+	int getLenght()const
+	{
+		return m_N;
+	}
+	int GetWeight()const
+	{
+		return m_M;
+	}
+	void SetNonZeroElems(double* Elems,int size)
+	{
+		if (m_col != size)
+		{
+			throw IncompatibleDimException("Unaccteptable sizes: ", m_col, size);
+		}
+		else
+		{
+			for (int i = 0; i < size; ++i)
+			{
+				m_A[i] = Elems[i];
+			}
+		}
+	}
+	friend istream& operator>>(istream& in, Matrix& m);
+	friend ostream& operator<<(ostream& out, const Matrix& m);
+	friend Vector operator*(const Matrix& m, const Vector& v);
+	
 };
+
+Matrix operator*(const Matrix& m, const int a);
+Matrix operator*(const int a, const Matrix& m);
