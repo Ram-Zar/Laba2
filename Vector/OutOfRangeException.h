@@ -1,19 +1,20 @@
 #pragma once
 #include <exception>
 #include <iostream>
-#pragma warning (disable:4996)
+
 class OutOfRangeException :public std::exception
 {
 private:
-	char Data[40]="";
+	std::string Data;
 public:
 	OutOfRangeException(){}
 	OutOfRangeException(const char* msg, int index) 
 	{
-		sprintf(Data, "%s%d", msg, index);
+		Data.append(msg);
+		Data.push_back(index);
 	}
 	const char* what() const override
 	{
-		return Data;
+		return Data.c_str();
 	}
 };
