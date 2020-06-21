@@ -10,7 +10,7 @@ int main()
 	Vector v1;
     // РАСКОММЕНТИРУЙ ВЫРАЖЕНИЕ НИЖЕ, И ИСПРАВЬ ОШИБКУ КОМПИЛЯЦИИ
     // ВЫРАЖЕНИЕ НЕ ТРОГАТЬ
-//    v1 + 1;
+    v1 + 1;
 	cin >> v1;
 	cout << "\nconst v" << ++idv << ":\n";
 	cout << "input vector dimension\ndim=";
@@ -82,7 +82,7 @@ int main()
 	}
 	cout << "\nInput number   n=";
 	cin >> i;
-	cout << "\n" << i << "*v1=" << i * v1 << "\nv1*" << i << "=" << v1 * i;
+	cout << "\n" << i << "*v1=" << operator*(i , v1) << "\nv1*" << i << "=" << operator*( v1 , i);
 	try
 	{
 		cout << "\n\nv3+v2=" << v3 + v2;
@@ -109,7 +109,7 @@ int main()
 	cin >> m2;
 	try
 	{
-    cout << "\nm2*v4=" << m2 * v4;
+    cout << "\nm2*v4=" << operator*(m2,v4);
 	}
 	catch (IncompatibleDimException& e)
 	{
@@ -132,7 +132,7 @@ int main()
 	cout << "\nvector result=v4-m2*3*(v5+v2*4)";
 	try
 	{
-        cout << "\nresult=" << v4 - m2 * 3 * (v5 + v2 * 4);
+        cout << "\nresult=" << v4 - operator*(m2 , operator*(3 , (operator+(v5 , v2 * 4))));
 	}
 	catch (IncompatibleDimException& e)
 	{

@@ -143,8 +143,5 @@ public:
 	friend istream& operator>>(istream& in, Matrix& m);
 	friend ostream& operator<<(ostream& out, const Matrix& m);
 	friend Vector operator*(const Matrix& m, const Vector& v);
-	
+	Matrix operator*(const int a);
 };
-
-Matrix operator*(const Matrix& m, const int a);
-Matrix operator*(const int a, const Matrix& m);

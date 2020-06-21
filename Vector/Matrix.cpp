@@ -1,27 +1,14 @@
 #include "Matrix.h"
 #include <iostream>
 using namespace std;
-Matrix operator*(const Matrix& m, const int a)
+Matrix Matrix::operator*(const int a)
 {
-	double* M = new double[m.GetNonZeroElemAmount()]; 
-	for (int i = 0; i < m.GetNonZeroElemAmount(); ++i)
+	Matrix temp = *this;
+	for (int i = 0; i < m_col; ++i)
 	{
-		 M[i]=m.GetNonZeroElem()[i]*a;
+		temp.m_A[i] *= a;
 	}
-	Matrix temp = m;
-    // НАДО ЖЕ НЕ ТОЛЬКО ЗНАЧЕНИЕ ЭЛЕМЕНТОВ ПЕРЕДАТЬ, НО И
-    // ИНФОРМАЦИО О ТОМ, ГДЕ ОНИ НАХОДЯТСЯ
-    // ВООБЩЕ НАДО БЫЛО ЭТОТ ОПЕРАТОР ОСТАВИТЬ ЧЛЕНОМ КЛАССА,
-    // А ПРИ РЕАЛИЗАЦИИ СКОПИРОВАТЬ temp = *this,
-    // УМНОЖИТЬ ЭЛЕМЕНТЫ temp НА ЧИСЛО И ВЕРНУТЬ temp
-	temp.SetNonZeroElems(M, m.GetNonZeroElemAmount());
-	delete[]M;
 	return temp;
-}
-Matrix operator*(const int a, const Matrix& m)
-{
-	Matrix temp = m;
-	return m * a;
 }
 istream& operator>>(istream& in, Matrix& m)
 {

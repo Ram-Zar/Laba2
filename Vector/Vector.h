@@ -16,7 +16,7 @@ public:
 	Vector()
 	{
 	}
-	Vector(int dim, double* points)
+	explicit Vector(int dim, double* points)
 	{
 		if (((_msize(points)) / 8) != dim)
 		{
@@ -29,7 +29,7 @@ public:
             m_vector[i] = points[i];
 		}
 	}
-	Vector(int dim, double n=0)
+	explicit Vector(int dim, double n=0)
 	{
 		m_dim = dim;
 		m_vector = new double[dim];
@@ -38,7 +38,7 @@ public:
 			m_vector[i] = n;
 		}
 	}
-	Vector(const Vector& vec)
+ Vector(const Vector& vec)
 	{
 		*this = vec;
 	}
@@ -54,7 +54,7 @@ public:
 	{
 		return m_vector;
 	}
-	Vector operator+()
+	 Vector operator+()
 	{
 		return Vector(*this);
 	}
@@ -85,6 +85,10 @@ public:
 		 return m_dim;
 	 }
      // днаюбэ ноепюрнп опенапюгнбюмхъ б int, осярэ нм бнгбпюыюер пюглеп бейрнпю
+	 operator int()
+	 {
+		 return m_dim;
+	 }
 	 operator double*()
 	 {
 		 return m_vector;
@@ -99,3 +103,4 @@ Vector operator+(const Vector& v, const Vector& w);
 Vector operator-(const Vector& v, const Vector& w);
 Vector operator*(const Vector& v, double a);
 Vector operator*(double a, const Vector& v);
+
