@@ -58,8 +58,12 @@ public:
 	}
 	Vector operator=(const Vector& v)
 	{
+        // онялнрпх пеюкхгюжхч ноепюрнпю йнохпнбюмхъ,
+        // с реаъ бннаые ме рн, врн мсфмн
 		return Vector(v);
 	}
+    // нашвмн щрнр ноепюрнп бнгбпюыюер яяшкйс
+    // return *this;
 	void operator+=(const Vector & v)//ГДЕЯЭ ЛНФЕР АШРЭ ХЯЙКЧВЕМХЕ
 	{
 		if (this->m_dim >= v.m_dim)
@@ -116,6 +120,9 @@ public:
 	friend std::istream& operator>>(std::istream& in, Vector& v);
 	friend double operator*(const Vector& v, const Vector& w);
 	friend Vector operator*(const Vector& v, double a);
+    // якедсчыхе рпх ноепюрнпю мюдн сапюрэ хг дпсгеи х пеюкхгнбюрэ
+    // йюй тсмйжхх онлнымхйх, йнрнпше ме хлечр днярсою й гюйпшрни
+    // вюярх йкюяяю
 	friend Vector operator*(double a, const Vector& v);
 	friend Vector operator+(const Vector& v, const Vector& w);
 	friend Vector operator-(const Vector& v, const Vector& w);

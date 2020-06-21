@@ -183,6 +183,8 @@ public:
 	}
 	friend Matrix operator*(const int a,const Matrix& m)
 	{
+        // ИСПОЛЬЗУЙ Matrix operator*(const Matrix& m, const int a)
+        // И УБЕРИ ИЗ ДРУЗЕЙ
 		Matrix temp(m);
 		for (int i = 0; i < m.m_col; ++i)
 		{

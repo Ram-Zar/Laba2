@@ -19,6 +19,11 @@
  }
 Vector operator+(const Vector& v, const Vector& w)
 {
+    // СКЛАДЫВАТЬ НАДО ВЕКТОРЫ ОДИНАКОВОГО РАЗМЕРА
+    // ЧТОБЫ НЕ ДУБЛИРОВАТЬ КОД СЛОЖЕНИЯ, НАДО ВОСПОЛЬЗОВАТЬСЯ
+    // УЖЕ ИМЕЮЩИМСЯ operator+=
+    // Vector arg1(v);
+    // return arg1 += w;
 	int min, max;
 	bool F;
 	if (v.m_dim > w.m_dim)
@@ -72,6 +77,8 @@ Vector operator*(const Vector& v, double a)
 
 Vector operator*(double a, const Vector& v)
 {
+    // ИСПОЛЬЗУЙ Vector operator*(const Vector& v, double a)
+    // ПРИ РЕАЛИЗАЦИИ, НЕ ДУБЛИРУЙ КОД
 	Vector temp(v);
 	for (int i = 0; i < v.m_dim; ++i)
 	{
@@ -82,6 +89,7 @@ Vector operator*(double a, const Vector& v)
 
 double operator*(const Vector& v, const Vector& w)
 {
+    // РАЗМЕРЫ ДОЛЖНЫ БЫТЬ ОДИНАКОВЫМИ, ЕСЛИ НЕТ - БРОСАЕМ ИСКЛЮЧЕНИЕ
 	int min, max;
 	double C = 0;
 	if (v.m_dim > w.m_dim)

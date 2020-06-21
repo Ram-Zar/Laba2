@@ -10,6 +10,8 @@ private:
 public:
 	IncompatibleDimException(const char *msg, int N, int M):exception(msg)
 	{
+        // ЭТИ ПАРАМЕТРЫ НАДО ВКЛЮЧИТЬ В СООБЩЕНИЕ msg, КОТОРОЕ ДОЛЖНО
+        // ВОЗВРАЩАТЬ ФУНЦИЯ what()
 		 m_size1=N;
 		 m_size2=M;
 		 m_i = -1;
@@ -18,6 +20,8 @@ public:
 	{
 		m_i = index;
 	}
+    // В БАЗОВОМ КЛАССЕ std::exception ЕСТЬ ВИРТУАЛЬНАЯ ФУНКЦИЯ what(),
+    // НАДО ПЕРЕГРУЗИТЬ ЕЁ И ПОЛЬЗОВАТЬСЯ ВМЕСТО getInfo()
 	void getInfo() 
 	{
 		if (m_i != -1)
