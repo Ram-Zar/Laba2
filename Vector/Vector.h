@@ -85,7 +85,7 @@ public:
 		 return m_dim;
 	 }
      // днаюбэ ноепюрнп опенапюгнбюмхъ б int, осярэ нм бнгбпюыюер пюглеп бейрнпю
-	 operator int()
+	operator int()
 	 {
 		 return m_dim;
 	 }

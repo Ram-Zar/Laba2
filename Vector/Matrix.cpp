@@ -71,44 +71,25 @@ istream& operator>>(istream& in, Matrix& m)
 	return out;
 }
  Vector operator*(const Matrix& m, const Vector& v)
- {
-	 double S;
-	 int line = 0, i = 0;
+ { 
 	 Vector temp(m.m_N);
 	 if (m.m_M == v.m_dim)
-	 {
-		 while (i < m.m_N + 1)
-		 {
-			 line = 0;
-			 S = 0;
-			 int j = 0;
-			 while (j < m.m_M)
-			 {
-				 if (m.m_LI[i] != -1)
-				 {
-					 if (m.m_LJ[m.m_LI[i] + line] == j)
-					 {
-						 S += v.m_vector[j] * m.m_A[m.m_LI[i] + line];
-						 if ((m.m_LI[i + 1] != m.m_LI[i] + 1) || (i == m.m_N - 1))
-						 {
-							 ++line;
-						 }
-					 }
-				 }
-				 ++j;
-			 }
-			 temp.m_vector[i] = S;
-			 if ((i + 1 == m.m_N) && (j == m.m_M))
-			 {
-				 i = m.m_N + 1;
-			 }
-
-			 ++i;
-		 }
+	 { 
+		 for (int i = 0; i < m.m_N; ++i)
+	     {
+			 int IAA = m.m_LI[i],IAB;
+		     if (i == m.m_N - 1)IAB = m.m_col;
+		     else IAB= m.m_LI[i + 1];   
+		     for (int k = IAA; k < IAB; ++k)
+		     {
+			     temp[i] += m.m_A[k] * v.m_vector[m.m_LJ[k]];
+		     }
+	     }
 	 }
 	 else
 	 {
 		 throw IncompatibleDimException("no matching of size matrix and vector", m.m_M, v.m_dim);
-	 }
+	 }	
+	 
 	 return temp;
  }

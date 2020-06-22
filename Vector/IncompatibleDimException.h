@@ -2,6 +2,7 @@
 #include <iostream>
 #include <exception>
 #include <cstring>
+#pragma warning (disable:4996)
 class IncompatibleDimException :public std::exception
 {
 private:
@@ -14,10 +15,7 @@ public:
 	IncompatibleDimException(const char *msg, int N, int M)
 	{
 		Data.append(msg);
-		Data.push_back(N);
-		Data.append(" and ");
-		Data.push_back(M);
-			
+		sprintf(const_cast<char*>(Data.c_str()+Data.length()), "%d%s%d", N," and ",M);			
 	}
 
 	const char* what() const

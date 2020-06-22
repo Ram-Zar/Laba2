@@ -1,7 +1,6 @@
 #include "Vector.h"
 #include <iostream>
 #include "Matrix.h"
-#include <malloc.h>
 using namespace std;
 int main()
 {
@@ -29,7 +28,7 @@ int main()
 	cout << "\nm" << ++idm << ":\n";
 	Matrix m1;
 	cin >> m1;
-	cout << "\n/////Check vector operations:////";
+    cout << "\n/////Check vector operations:////";
 	cout << "\n+v1=";
 	cout << +v1;
 	cout << "\n-v1=";
