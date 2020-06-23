@@ -10,8 +10,8 @@ public:
 	OutOfRangeException(){}
 	OutOfRangeException(const char* msg, int index) 
 	{
-		Data.append(msg);
-		sprintf(const_cast<char*>(Data.c_str() + Data.length()), "%d",index);
+		char buff[10];
+		Data +msg+ itoa(index, buff, 10);
 	}
 	const char* what() const override
 	{
