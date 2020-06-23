@@ -10,6 +10,11 @@ Matrix Matrix::operator*(const int a)
 	}
 	return temp;
 }
+
+// ЗРЯ УДАЛИЛА ОПЕРАТОР УМНОЖЕНИЯ ЧИСЛА НА МАТРИЦУ
+// ТАМ БЫЛО ВСЁ ПРАВИЛЬНО - ПРОСТО МЕНЯЛИСЬ АРГУМЕНТЫ МЕСТАМИ
+// И ВЫЗЫВАЛСЯ Matrix::operator*(const int a)
+
 istream& operator>>(istream& in, Matrix& m)
 {
 	double** temp;
